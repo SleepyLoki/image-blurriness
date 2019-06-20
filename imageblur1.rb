@@ -20,6 +20,7 @@ class Image
   end
 end
 
+# New 'Image' object gets created and initialized with a provided array
 image = Image.new([
   [0, 0, 0, 0],
   [0, 1, 0, 0],
@@ -27,4 +28,5 @@ image = Image.new([
   [0, 0, 0, 0]
 ])
 
+# Outputs the result to the console!
 image.output_image
