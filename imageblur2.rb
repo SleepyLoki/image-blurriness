@@ -20,18 +20,36 @@ class Image
         end
       end
     end
-
-    # This loop is used to debug and check to see if the locations of the '1's' are saved and correct!
-    # ones.each do |row|
-    #   puts row.join
-    # end
-
     # Returns the 'ones' array to the blur method
     return ones
   end
 
   def blur
     ones_coord = find_ones # Local save of the location of the '1's' in the array
+
+    # This loop is used to debug and check to see if the locations of the '1's' are saved and correct!
+    # ones_coord.each do |row|
+    #   puts row.join
+    # end
+
+    # We will loop through the original array (@image_blur_array) in a similar fashion as when looking for the 1's in the array.
+    @image_blur_array.each_with_index do |row, row_index|
+      row.each_with_index do |column, col_index|
+        ones_coord.each do |found_row_index, found_col_index| # We will be using the ones array (coords of the location of the 1s in the array) to compare with the original array
+
+          # if the row/column index of the original array equals to the row/col index of the array that contains the coords of the 1's, change image
+          if row_index == found_row_index && col_index == found_col_index
+            @image_blur_array[row_index + 1][col_index] = 1 unless row_index == 0 #upper bounds
+            @image_blur_array[row_index - 1][col_index] = 1 unless row_index >= 3 #lower bounds
+            @image_blur_array[row_index][col_index - 1] = 1 unless col_index == 0 #left bounds
+            @image_blur_array[row_index][col_index + 1] = 1 unless col_index >= 3 # right bounds
+          end
+        end
+      end
+    end
+    puts
+    puts "Image Blur #2"
+    output_image
   end
 
   # This outputs each digit on its own line!
@@ -58,6 +76,7 @@ image = Image.new([
 ])
 
 # Outputs the results to the console -> Image Blur 1!
+puts "Original Array"
 image.output_image
 
 # Outputs the results to the console -> Image Blur 2!
